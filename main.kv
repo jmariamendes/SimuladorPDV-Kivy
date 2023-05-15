@@ -1,0 +1,1365 @@
+#:import MDDataTable kivymd.uix.datatables.MDDataTable
+
+<LoginScreen>:
+    f_username: username
+    f_password: password
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Login"
+            type: "top"
+            # left_action_items: [["menu"]]
+            md_bg_color: 'dodgerblue'
+
+        MDBoxLayout:
+            pos_hint:{"center_x": .5,"center_y": .5}
+            adaptive_size: True
+
+            Button:
+                id: label_credito
+                text: 'Login'
+                size_hint: None, None
+                size: dp(300), dp(48)
+                # font_size: 20
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                background_normal: ''
+                background_color: 'dodgerblue'
+
+        MDLabel:
+            text: ''
+
+    MDGridLayout:
+        id:tela_login
+        cols:1
+        size_hint:[.3,.25]
+        spacing:30
+        pos_hint:{"center_x": .5,"center_y": .5}
+
+        MDTextField:
+            id:username
+            tab_width: 0
+            hint_text: "Usuário"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "orange"
+            helper_text_mode: "on_focus"
+            required: True
+            max_text_length: 30
+            write_tab: False
+
+        MDTextField:
+            id:password
+            multiline:False
+            password:True
+            # focus: True
+            tab_width: 0
+            # icon_left: "key-variant"
+            hint_text: "Senha"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "orange"
+            helper_text_mode: "on_focus"
+            required: True
+            max_text_length: 30
+            write_tab: False
+
+        AnchorLayout:
+            Button:
+                id: entra
+                text: 'Entrar'
+                size_hint: None, None
+                size: dp(250), dp(48)
+                background_normal: ''
+                background_color: 'dodgerblue'
+                on_release: root.login()
+                on_state: root.aguarde()
+
+<MenuScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Menu Principal"
+            type: "top"
+            left_action_items: [["menu", lambda x: app.rotaux.callback(x)]]
+            md_bg_color: 'dodgerblue'
+            # specific_text_color: app.theme_cls.accent_color
+
+        MDLabel:
+            id: label_menu
+            text:"Selecione a transação"
+            size_hint: None, None
+            size: dp(300), dp(100)
+            font_size: 30
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}
+
+        MDBoxLayout:
+            Button:
+                id: botao_credito
+                text: 'Crédito'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color:'dodgerblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                on_press: root.manager.current = 'menucredito'
+
+            Button:
+                id: botao_debito
+                text: 'Débito'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color:'skyblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                on_press: root.manager.current = 'debito'
+
+            Button:
+                id: botao_pix
+                text: 'PIX'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'dodgerblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                # disabled: True
+                # on_press: root.manager.current = 'menucredito'
+
+
+        MDBoxLayout:
+
+            Button:
+                id: botao_cancel
+                text: 'Cancel.'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'skyblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                on_press: root.manager.current = 'nsucancelamento'
+
+            Button:
+                id: botao_inicializa
+                text: 'Inicialização'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'dodgerblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                on_press: root.manager.current = 'inicializa'
+
+            Button:
+                id: botao_abertura
+                text: 'Abertura'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'skyblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                on_press: root.manager.current = 'abertura'
+
+        MDBoxLayout:
+
+            Button:
+                id: botao_relat
+                text: 'Relatório'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'dodgerblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                on_press: root.manager.current = 'selecionatransacoes'
+
+            Button:
+                id: botao_config
+                text: 'Configuração'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'skyblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                # on_press: root.manager.current = 'login'
+
+            Button:
+                id: botao_sair
+                text: 'Sair'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'dodgerblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                # on_press: app.close_app()
+                on_press: root.manager.current = 'login'
+
+        MDLabel:
+            text:""
+            pos_hint:{"center_x": .0,"center_y": .0}
+
+
+<InicializaScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Inicializa POS"
+            type: "top"
+            left_action_items: [["menu"]]
+            pos_hint:{'top':1}
+            md_bg_color: 'dodgerblue'
+            # specific_text_color: app.theme_cls.accent_color
+
+        MDLabel:
+            text:""
+
+<AberturaScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Abertura POS"
+            type: "top"
+            left_action_items: [["menu"]]
+            pos_hint:{'top':1}
+            md_bg_color: 'dodgerblue'
+            # specific_text_color: app.theme_cls.accent_color
+
+        MDLabel:
+            text:""
+
+<MenuCreditoScreen>:
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Venda Crédito"
+            type: "top"
+            left_action_items: [["menu", lambda x: root.callback(x)]]
+            md_bg_color: 'dodgerblue'
+            # specific_text_color: app.theme_cls.accent_color
+
+        MDLabel:
+            id: label_menu
+            text:"Selecione a transação"
+            size_hint: None, None
+            size: dp(300), dp(100)
+            font_size: 30
+            pos_hint: {"center_x": 0.5, "center_y": 0.3}
+
+        MDBoxLayout:
+            Button:
+                id: botao_avista
+                text: 'À vista'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'dodgerblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                on_press: root.manager.current = 'credito'
+
+            Button:
+                id: botao_comjuros
+                text: 'Parc. com juros'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'skyblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                on_press: root.manager.current = 'creditocomjuros'
+
+        MDBoxLayout:
+
+            Button:
+                id: botao_semjuros
+                text: 'Parc. sem juros'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'skyblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                on_press: root.manager.current = 'creditosemjuros'
+
+            Button:
+                id: botao_voltar
+                text: 'Voltar'
+                pos_hint: {"center_x": 0.5, "center_y": 0.5}
+                background_color: 'dodgerblue'
+                background_normal: ''
+                color: (0, 0, 0)
+                on_press: root.manager.current = 'menu'
+
+        MDLabel:
+            text:""
+            pos_hint:{"center_x": .0,"center_y": .0}
+
+
+<CreditoScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Venda crédito"
+            type: "top"
+            left_action_items: [["menu", lambda x: app.rotaux.callback(x)]]
+            md_bg_color: 'dodgerblue'
+
+        MDBoxLayout:
+            pos_hint:{"center_x": .5,"center_y": .5}
+            adaptive_size: True
+
+            Button:
+                id: label_credito
+                text: 'Crédito à vista'
+                size_hint: None, None
+                size: dp(300), dp(48)
+                # font_size: 20
+                # text_size: (200, None)
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                background_normal: ''
+                background_color: 'dodgerblue'
+                # on_release: root.login()
+
+        MDLabel:
+            text:""
+
+    MDGridLayout:
+        id: tela_credito
+        cols:2
+        size_hint:[.3,.25]
+        spacing:(80, 30)
+        # pos_hint:{"center_x": .35,"center_y": .65}
+
+        MDTextField:
+            id:num_cartao
+            # multiline:False
+            # focus: True
+            tab_width: 0
+            hint_text: "Num. cartão"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            max_text_length: 20
+            write_tab: False
+            input_filter: root.check_cartao
+
+        MDTextField:
+            id:val_cartao
+            multiline:False
+            tab_width: 0
+            hint_text: "Validade"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            max_text_length: 5
+            write_tab: False
+            input_filter: root.check_validade
+
+        MDTextField:
+            id:cod_seg
+            multiline:False
+            tab_width: 0
+            hint_text: "Cod. seg."
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            max_text_length: 3
+            input_filter: "int"
+            write_tab: False
+            input_filter: root.check_codseg
+
+        MDTextField:
+            id:valor
+            multiline:False
+            tab_width: 0
+            hint_text: "Valor"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            max_text_length: 9
+            input_filter: "float"
+            write_tab: False
+            input_filter: root.check_valor
+
+        MDTextField:
+            id:num_parcelas
+            multiline:False
+            tab_width: 0
+            hint_text: "Parcelas"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            max_text_length: 2
+            write_tab: False
+            input_filter: root.check_parcelas
+
+        MDTextField:
+            id:end_email
+            multiline:False
+            tab_width: 0
+            hint_text: "E-Mail"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text: "eMail p/ comprovante"
+            helper_text_mode: "on_focus"
+            required: False
+            validator: "email"
+            write_tab: False
+            # input_filter: root.check_parcelas
+
+        Button:
+            id:cancela
+            text:"Cancelar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            background_normal: ''
+            background_color: 'lightskyblue'
+            color: 'dodgerblue'
+            on_press: root.manager.current = 'menucredito'
+
+        # MDRaisedButton:
+        Button
+            id:entra
+            text:"Confirmar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            #md_bg_color: 'dodgerblue'
+            background_normal: ''
+            background_color: 'dodgerblue'
+            color: 'white'
+            on_release: root.credito()
+            on_state: root.aguarde()
+            # on_release: root.aguarde()
+
+<DebitoScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Venda débito"
+            type: "top"
+            left_action_items: [["menu", lambda x: app.rotaux.callback(x)]]
+            md_bg_color: 'dodgerblue'
+
+        MDBoxLayout:
+            pos_hint:{"center_x": .5,"center_y": .5}
+            adaptive_size: True
+
+            Button:
+                id: label_debito
+                text: 'Cartão de débito'
+                size_hint: None, None
+                size: dp(300), dp(48)
+                # font_size: 20
+                # text_size: (200, None)
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                background_normal: ''
+                background_color: 'dodgerblue'
+                # on_release: root.login()
+
+        MDLabel:
+            text:""
+
+    MDGridLayout:
+        id: tela_debito
+        cols:2
+        size_hint:[.3,.25]
+        spacing:(80, 30)
+        # pos_hint:{"center_x": .35,"center_y": .65}
+
+        MDTextField:
+            id:num_cartao
+            # multiline:False
+            # focus: True
+            tab_width: 0
+            hint_text: "Num. cartão"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            max_text_length: 20
+            write_tab: False
+            required: False
+            disabled: True
+            # input_filter: root.check_cartao
+
+        MDLabel:
+            text:""
+
+        MDTextField:
+            id:valor
+            multiline:False
+            tab_width: 0
+            hint_text: "Valor"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            max_text_length: 9
+            input_filter: "float"
+            write_tab: False
+            input_filter: root.check_valor
+
+        MDLabel:
+            text:""
+
+        Button:
+            id:cancela
+            text:"Cancelar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            background_normal: ''
+            background_color: 'lightskyblue'
+            color: 'dodgerblue'
+            on_press: root.manager.current = 'menu'
+
+        Button
+            id:entra
+            text:"Confirmar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            #md_bg_color: 'dodgerblue'
+            background_normal: ''
+            background_color: 'dodgerblue'
+            color: 'white'
+            on_release: root.debito()
+            on_state: root.aguarde()
+            # on_release: root.aguarde()
+
+<NsuCancelamentoScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Cancelamento"
+            type: "top"
+            left_action_items: [["menu", lambda x: app.rotaux.callback(x)]]
+            pos_hint:{'top':1}
+            md_bg_color: 'dodgerblue'
+
+        MDBoxLayout:
+            pos_hint:{"center_x": .5,"center_y": .5}
+            adaptive_size: True
+
+            Button:
+                id: label_cancelamento
+                text: 'Informe a NSU a cancelar'
+                size_hint: None, None
+                size: dp(300), dp(48)
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                background_normal: ''
+                background_color: 'dodgerblue'
+
+        MDLabel:
+            text:""
+
+    MDGridLayout:
+        id: tela_nsu_cancelamento
+        cols:2
+        size_hint:[.3,.25]
+        spacing:(80, 30)
+        pos_hint:{"center_x": .5,"center_y": .5}
+
+        MDTextField:
+            id:num_nsu
+            # multiline:False
+            # focus: True
+            tab_width: 0
+            size_hint: None, None
+            pos_hint:{"center_x": .35,"center_y": .5}
+            hint_text: "NSU a cancelar"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            max_text_length: 10
+            input_filter: "int"
+            write_tab: False
+
+        MDLabel:
+            text:""
+
+        Button:
+            id:cancela
+            text:"Cancelar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            background_normal: ''
+            background_color: 'lightskyblue'
+            color: 'dodgerblue'
+            on_press: root.manager.current = 'menu'
+
+        Button
+            id:entra
+            text:"Confirmar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            background_normal: ''
+            background_color: 'dodgerblue'
+            color: 'white'
+            on_release: root.nsu_cancelamento()
+            on_state: root.aguarde()
+
+<CancelamentoScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Cancelamento"
+            type: "top"
+            left_action_items: [["menu", lambda x: app.rotaux.callback(x)]]
+            md_bg_color: 'dodgerblue'
+
+        MDBoxLayout:
+            pos_hint:{"center_x": .5,"center_y": .5}
+            adaptive_size: True
+
+            Button:
+                id: label_cancelamento
+                text: 'Dados da NSU a cancelar'
+                size_hint: None, None
+                size: dp(300), dp(48)
+                # font_size: 20
+                # text_size: (200, None)
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                background_normal: ''
+                background_color: 'dodgerblue'
+                # on_release: root.login()
+
+        MDLabel:
+            text:""
+
+    MDGridLayout:
+        id: tela_cancelamento
+        cols:2
+        size_hint:[.3,.30]
+        spacing:(60, 10)
+        col_default_width: 300
+
+        MDTextField:
+            id:num_cartao
+            multiline:False
+            # max_text_length: 20
+            tab_width: 0
+            hint_text: "Num. cartão"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+
+        MDTextField:
+            id:nsu_tef
+            multiline:False
+            tab_width: 0
+            hint_text: "NSU TEF"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+
+        MDTextField:
+            id:cod_loja
+            multiline:False
+            tab_width: 0
+            hint_text: "Loja"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:valor
+            multiline:False
+            tab_width: 0
+            hint_text: "Valor"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:pdv
+            multiline:False
+            tab_width: 0
+            hint_text: "PDV"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:transacao
+            multiline:False
+            tab_width: 0
+            hint_text: "Transação"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:status
+            multiline:False
+            tab_width: 0
+            hint_text: "Status"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:bandeira
+            multiline:False
+            tab_width: 0
+            hint_text: "Bandeira"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:adiq
+            multiline:False
+            tab_width: 0
+            hint_text: "Adquirente"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:data_hora
+            multiline:False
+            tab_width: 0
+            hint_text: "Data/Hora"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: False
+            disabled: True
+            font_size: "12sp"
+
+        Button:
+            id:cancela
+            text:"Cancelar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            background_normal: ''
+            background_color: 'lightskyblue'
+            color: 'dodgerblue'
+            on_press: root.manager.current = 'menu'
+
+        Button
+            id:entra
+            text:"Confirmar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            #md_bg_color: 'dodgerblue'
+            background_normal: ''
+            background_color: 'dodgerblue'
+            color: 'white'
+            on_release: root.cancelamento()
+
+<AutorizaCancelamentoScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Cancelamento"
+            type: "top"
+            left_action_items: [["menu", lambda x: app.rotaux.callback(x)]]
+            md_bg_color: 'dodgerblue'
+
+        MDBoxLayout:
+            pos_hint:{"center_x": .5,"center_y": .5}
+            adaptive_size: True
+
+            Button:
+                id: label_autoriza
+                text: 'Autorização de Cancelamento'
+                size_hint: None, None
+                size: dp(300), dp(48)
+                # font_size: 20
+                # text_size: (200, None)
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                background_normal: ''
+                background_color: 'dodgerblue'
+                # on_release: root.login()
+
+        MDLabel:
+            text:""
+
+    MDGridLayout:
+        id: tela_autorizacao
+        cols:2
+        size_hint:[.3,.25]
+        spacing:(60, 10)
+        col_default_width: 300
+
+        MDTextField:
+            id:num_cartao
+            multiline:False
+            # max_text_length: 20
+            tab_width: 0
+            hint_text: "Num. cartão"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            # font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:nsu_tef
+            multiline:False
+            tab_width: 0
+            hint_text: "NSU TEF"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:valor
+            multiline:False
+            tab_width: 0
+            hint_text: "Valor"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: False
+            disabled: True
+            # max_text_length: 9
+
+        MDTextField:
+            id:data
+            multiline:False
+            tab_width: 0
+            hint_text: "Data original"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:supervisor
+            multiline:False
+            tab_width: 0
+            hint_text: "Supervisor"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            disabled: False
+            write_tab: False
+
+        MDTextField:
+            id:senha
+            multiline:False
+            password:True
+            tab_width: 0
+            hint_text: "Senha"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            disabled: False
+            write_tab: False
+
+        Button:
+            id:cancela
+            text:"Cancelar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            background_normal: ''
+            background_color: 'lightskyblue'
+            color: 'dodgerblue'
+            on_press: root.manager.current = 'menu'
+
+        Button
+            id:entra
+            text:"Autorizar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            #md_bg_color: 'dodgerblue'
+            background_normal: ''
+            background_color: 'dodgerblue'
+            color: 'white'
+            on_release: root.autoriza()
+            on_state: root.aguarde()
+
+<ComprovanteScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS"
+            type: "top"
+            left_action_items: [["menu", lambda x: app.rotaux.callback(x)]]
+            md_bg_color: 'dodgerblue'
+
+        MDBoxLayout:
+            pos_hint:{"center_x": .5,"center_y": .5}
+            adaptive_size: True
+
+            Button:
+                id: label_credito
+                text: 'Comprovante'
+                size_hint: None, None
+                size: dp(300), dp(48)
+                # font_size: 20
+                # text_size: (200, None)
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                background_normal: ''
+                background_color: 'dodgerblue'
+                # on_release: root.login()
+
+        MDLabel:
+            id:label_comprovante
+            text:""
+            # size_hint:[.3,.25]
+            # pos_hint:{"center_x": .8,"center_y": .65}
+            # font_size: 35
+
+        MDGridLayout:
+            cols:2
+            id:botoes
+            size_hint:[.3,.25]
+            spacing:(80, 30)
+            # pos_hint:{"center_x": .35,"center_y": .65}
+
+            Button:
+                id:cancela
+                text:"Cancelar"
+                size_hint: None, None
+                size: dp(100), dp(48)
+                background_normal: ''
+                background_color: 'lightskyblue'
+                color: 'dodgerblue'
+                on_release: root.cancela_trans()
+                on_state: root.aguarde_cancelamento()
+
+            Button
+                id:entra
+                text:"Confirmar"
+                size_hint: None, None
+                size: dp(100), dp(48)
+                #md_bg_color: 'dodgerblue'
+                background_normal: ''
+                background_color: 'dodgerblue'
+                color: 'white'
+                on_release: root.confirma_trans()
+                on_state: root.aguarde_confirmacao()
+
+<RadioButton@MDCheckbox>:
+    group: 'group'
+    size_hint: None, None
+    size: dp(48), dp(48)
+
+<ItemConfirm>
+    on_release: check.active = not check.active
+
+    CheckboxLeftWidget:
+        id: check
+        group: "check"
+        # on_active: if self.active: print(root.text)
+        on_active: if self.active: root.set_option(root.text)
+
+<SelecaoRelatorioScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Relatorio"
+            type: "top"
+            left_action_items: [["menu", lambda x: app.rotaux.callback(x)]]
+            md_bg_color: 'dodgerblue'
+
+        MDBoxLayout:
+            pos_hint:{"center_x": .5,"center_y": .5}
+            adaptive_size: True
+
+            Button:
+                id: label_pesq
+                text: 'Pesquisa de transações'
+                size_hint: None, None
+                size: dp(300), dp(48)
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                background_normal: ''
+                background_color: 'dodgerblue'
+
+        MDLabel:
+            text:""
+
+    MDGridLayout:
+        id: tela_selecao
+        cols:2
+        size_hint:[.3,.30]
+        spacing:(90, 30)
+        # pos_hint:{"center_x": .35,"center_y": .65}
+
+        MDTextField:
+            id:data_inicial
+            focus: False
+            tab_width: 0
+            hint_text: "Data inicial"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            write_tab: False
+            font_size: "15sp"
+            allow_copy: False
+            # readonly: True
+            # disabled: True
+            # on_focus: root.seleciona_data_inicial()
+
+        MDTextField:
+            id:data_final
+            focus: False
+            tab_width: 0
+            hint_text: "Data final"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            write_tab: False
+            font_size: "15sp"
+            allow_copy: False
+            # readonly: True
+            # disabled: True
+
+        MDTextField:
+            id:tipo_trans
+            focus: False
+            tab_width: 0
+            hint_text: "Status transação"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            write_tab: False
+            font_size: "15sp"
+            allow_copy: False
+            # readonly: True
+            # disabled: True
+
+        MDTextField:
+            id:num_pdv
+            # focus: True
+            tab_width: 0
+            hint_text: "Número do PDV"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: True
+            write_tab: False
+            max_text_length: 3
+            input_filter: "int"
+
+        Button:
+            id:cancela
+            text:"Cancelar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            background_normal: ''
+            background_color: 'lightskyblue'
+            color: 'dodgerblue'
+            on_press: root.manager.current = 'menu'
+
+        Button
+            id:entra
+            text:"Confirmar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            #md_bg_color: 'dodgerblue'
+            background_normal: ''
+            background_color: 'dodgerblue'
+            color: 'white'
+            on_release: root.selecionatransacoes()
+            on_state: root.aguarde()
+
+<RelatorioTransacoesScreen>:
+
+    MDBoxLayout:
+        id: tela_trans
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Relatorio"
+            type: "top"
+            left_action_items: [["menu", lambda x: app.rotaux.callback(x)]]
+            md_bg_color: 'dodgerblue'
+
+        MDBoxLayout:
+            pos_hint:{"center_x": .5,"center_y": .7}
+            adaptive_size: True
+
+            MDLabel:
+                id: label_menu
+                text:"Selecione a transação"
+                size_hint: None, None
+                size: dp(300), dp(100)
+                font_size: 25
+                pos_hint: {"center_x": 0.5, "center_y": .6}
+
+        MDLabel:
+            text:""
+
+    AnchorLayout:
+        id: tela_relat
+        pos_hint: {"center_x": 0.5, "center_y": 0.4}
+
+<DetalheTransacaoScreen>:
+
+    MDBoxLayout:
+        orientation: "vertical"
+
+        MDTopAppBar:
+            title: "SuperPOS - Relatorio"
+            type: "top"
+            left_action_items: [["menu", lambda x: app.rotaux.callback(x)]]
+            md_bg_color: 'dodgerblue'
+
+        MDBoxLayout:
+            pos_hint:{"center_x": .5,"center_y": .5}
+            adaptive_size: True
+
+            Button:
+                id: label_relatorio
+                text: 'Dados da transação'
+                size_hint: None, None
+                size: dp(300), dp(48)
+                # font_size: 20
+                # text_size: (200, None)
+                pos_hint: {"center_x": 0.5, "center_y": 0.3}
+                background_normal: ''
+                background_color: 'dodgerblue'
+                # on_release: root.login()
+
+        MDLabel:
+            text:""
+
+    MDGridLayout:
+        id: tela_relatorio
+        cols:2
+        size_hint:[.3,.30]
+        spacing:(60, 10)
+        col_default_width: 300
+
+        MDTextField:
+            id:num_cartao
+            multiline:False
+            # max_text_length: 20
+            tab_width: 0
+            hint_text: "Num. cartão"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+
+        MDTextField:
+            id:nsu_tef
+            multiline:False
+            tab_width: 0
+            hint_text: "NSU TEF"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+
+        MDTextField:
+            id:cod_loja
+            multiline:False
+            tab_width: 0
+            hint_text: "Loja"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:valor
+            multiline:False
+            tab_width: 0
+            hint_text: "Valor"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:pdv
+            multiline:False
+            tab_width: 0
+            hint_text: "PDV"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:transacao
+            multiline:False
+            tab_width: 0
+            hint_text: "Transação"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:status
+            multiline:False
+            tab_width: 0
+            hint_text: "Status"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:bandeira
+            multiline:False
+            tab_width: 0
+            hint_text: "Bandeira"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:adiq
+            multiline:False
+            tab_width: 0
+            hint_text: "Adquirente"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            font_size: "12sp"
+            required: False
+            disabled: True
+
+        MDTextField:
+            id:data_hora
+            multiline:False
+            tab_width: 0
+            hint_text: "Data/Hora"
+            hint_text_color_normal: "blue"
+            hint_text_color_focus: "dodgerblue"
+            helper_text_mode: "on_focus"
+            required: False
+            disabled: True
+            font_size: "12sp"
+
+        Button:
+            id:cancela
+            text:"Cancelar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            background_normal: ''
+            background_color: 'lightskyblue'
+            color: 'dodgerblue'
+            on_press: root.manager.current = 'menu'
+
+        Button
+            id:entra
+            text:"Voltar"
+            size_hint: None, None
+            size: dp(100), dp(48)
+            #md_bg_color: 'dodgerblue'
+            background_normal: ''
+            background_color: 'dodgerblue'
+            color: 'white'
+            on_press: root.manager.current = 'relatoriotransacoes'
+
+
+<DialogContent>:
+    orientation: "vertical"
+    spacing: "5dp"
+    size_hint: 1, None
+    height: "50dp"
+
+    BoxLayout:
+        orientation: 'horizontal'
+
+        MDRaisedButton:
+            text: "OK"
+            theme_text_color:"Custom"
+            text_color:"black"
+            md_bg_color: 'dodgerblue'
+            on_press: (app.botaoOK())
+
+<DialogMsg>:
+    orientation: "vertical"
+    spacing: "5dp"
+    size_hint: 1, None
+    height: "50dp"
+
+    BoxLayout:
+        orientation: 'horizontal'
+
+<DialogOKCancel>:
+    orientation: "vertical"
+    spacing: "10dp"
+    size_hint: 1, None
+    height: "50dp"
+
+    BoxLayout:
+        orientation: 'horizontal'
+        adaptive_height: True
+        adaptive_width: True
+
+        MDFlatButton:
+            text: "OK"
+            theme_text_color:"Custom"
+            text_color:"black"
+            md_bg_color: 'dodgerblue'
+            on_press: (app.botaoOK())
+        MDRaisedButton:
+            text: 'CANCEL'
+            theme_text_color:"Custom"
+            text_color:"black"
+            md_bg_color: "red"
+            on_press: (app.botaoCancel())
